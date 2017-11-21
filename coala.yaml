@@ -1,5 +1,16 @@
 organisation: coala
+company: coala.io
 url: https://coala.io/
 author: The coala developers
 contact: coala-devel@googlegroups.com
 license: AGPL-3.0
+copyright_year: 2017
+docs_output_dir: docs
+maintainers:
+  - Lasse Schuirmann
+  - Fabian Neuschmidt
+  - Mischa Kr\xfcger
+maintainer_emails:
+  - lasse.schuirmann@gmail.com
+  - fabian@neuschmidt.de
+  - makman@alice.de
