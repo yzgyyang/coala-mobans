@@ -1,0 +1,157 @@
+#!/usr/bin/env python3
+
+{%if package_module == 'coalib' %}
+import datetime
+{%endif%}
+import locale
+import platform
+import sys
+{%if package_module == 'coalib' %}
+from os import getenv
+{%endif%}
+from subprocess import call
+
+import setuptools.command.build_py
+from setuptools import find_packages, setup
+from setuptools.command.test import test as TestCommand
+
+{%if package_module == 'coalib' %}
+from coalib import assert_supported_version, get_version
+from coalib.misc.BuildManPage import BuildManPage
+
+{%endif%}
+try:
+    lc = locale.getlocale()
+    pf = platform.system()
+    if pf != 'Windows' and lc == (None, None):
+        locale.setlocale(locale.LC_ALL, 'C.UTF-8')
+except (ValueError, UnicodeError):
+    locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+
+{%block local_exec_block_1%}
+{%endblock%}
+
+class PyTestCommand(TestCommand):
+
+    def run_tests(self):
+        # import here, cause outside the eggs aren't loaded
+        import pytest
+        errno = pytest.main([])
+        sys.exit(errno)
+
+
+class BuildDocsCommand(setuptools.command.build_py.build_py):
+    apidoc_command = (
+        'sphinx-apidoc', '-f', '-o', '{{docs_output_dir}}',
+{%if package_module == 'coalib' %}
+        '--no-toc',
+{%endif%}
+        '{{package_module}}'
+    )
+    make_command = ('make', '-C', 'docs', 'html', 'SPHINXOPTS=-W')
+
+    def run(self):
+        err_no = call(self.apidoc_command)
+        if not err_no:
+            err_no = call(self.make_command)
+        sys.exit(err_no)
+
+{%block local_exec_block_2%}
+{%endblock%}
+
+with open('requirements.txt') as requirements:
+    required = requirements.read().splitlines()
+{%if package_module == 'bears' %}
+    required.remove('-r bear-requirements.txt')
+{%endif%}
+
+with open('test-requirements.txt') as requirements:
+    test_required = requirements.read().splitlines()
+
+with open('README.rst') as readme:
+    long_description = readme.read()
+
+extras_require = None
+data_files = None
+{%block custom_requirements%}
+{%endblock%}
+
+if __name__ == '__main__':
+    setup(name='{{name}}',
+          version='{{build_version}}',
+          description='{{description}}',
+          author='{{author}}',
+          author_email='{{contact}}',
+          maintainer='{{ maintainers |join(', ') }}'{% if rtd_maintainer %}
+
+                     if not on_rtd else '{{rtd_maintainer}}'{%endif%},
+          maintainer_email=({% for email in maintainer_emails: %}
+{%- if not loop.first %}                            {%endif%}
+'{{- email }}{% if not loop.last %}, {%endif%}'{% if loop.last %}),{%endif%}
+
+{%endfor%}
+          url='{{url}}',
+          platforms='any',
+          packages=find_packages(exclude=('build.*', 'tests', 'tests.*')),
+          install_requires=required,
+          extras_require=extras_require,
+          tests_require=test_required,
+{%if package_module == 'coalib' %}
+          package_data={'coalib': ['default_coafile', 'VERSION',
+                                   'bearlib/languages/documentation/*.coalang']
+                        },
+{%elif package_module == 'bears' %}
+          package_data={'bears': ['VERSION'],
+                        'bears.java': ['checkstyle.jar', 'google_checks.xml'],
+                        'bears.scala': ['scalastyle.jar',
+                                        'scalastyle_config.xml']},
+{%endif%}
+          license='AGPL-3.0',
+          data_files=data_files,
+          long_description=long_description,
+{%if entry_points %}
+          entry_points={
+  {% for group_name, items in entry_points.items(): %}
+              '{{group_name}}': [
+    {% for item in items: %}
+                  '{{item}}',
+    {% endfor %}
+              ],
+  {% endfor %}
+          },
+{%endif%}
+          # from http://pypi.python.org/pypi?%3Aaction=list_classifiers
+          classifiers=[
+              'Development Status :: 4 - Beta',
+
+{%if package_module == 'coalib' %}
+              'Environment :: Console',
+{%elif package_module == 'bears' %}
+              'Environment :: Plugins',
+{%endif%}
+              'Environment :: MacOS X',
+              'Environment :: Win32 (MS Windows)',
+              'Environment :: X11 Applications :: Gnome',
+
+              'Intended Audience :: Science/Research',
+              'Intended Audience :: Developers',
+
+              'License :: OSI Approved :: GNU Affero General Public License '
+              'v3 or later (AGPLv3+)',
+
+              'Operating System :: OS Independent',
+
+              'Programming Language :: Python :: Implementation :: CPython',
+              'Programming Language :: Python :: 3.4',
+              'Programming Language :: Python :: 3.5',
+              'Programming Language :: Python :: 3 :: Only',
+
+              'Topic :: Scientific/Engineering :: Information Analysis',
+              'Topic :: Software Development :: Quality Assurance',
+              'Topic :: Text Processing :: Linguistic'],
+          cmdclass={'docs': BuildDocsCommand,
+{%if package_module == 'coalib' %}
+                    'build_manpage': BuildManPage,
+                    'build_py': BuildPyCommand,
+{%endif%}
+                    'test': PyTestCommand})
