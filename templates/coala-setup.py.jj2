@@ -28,6 +28,8 @@ try:
 except (ValueError, UnicodeError):
     locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
+VERSION = '{{build_version}}'
+
 {%block local_exec_block_1%}
 {%endblock%}
 
@@ -78,7 +80,7 @@ data_files = None
 
 if __name__ == '__main__':
     setup(name='{{name}}',
-          version='{{build_version}}',
+          version=VERSION,
           description='{{description}}',
           author='{{author}}',
           author_email='{{contact}}',
@@ -150,8 +152,6 @@ if __name__ == '__main__':
               'Topic :: Software Development :: Quality Assurance',
               'Topic :: Text Processing :: Linguistic'],
           cmdclass={'docs': BuildDocsCommand,
-{%if package_module == 'coalib' %}
-                    'build_manpage': BuildManPage,
-                    'build_py': BuildPyCommand,
-{%endif%}
+{% block custom_setup_commands %}
+{% endblock %}
                     'test': PyTestCommand})
