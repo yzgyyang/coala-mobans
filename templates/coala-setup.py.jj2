@@ -4,6 +4,7 @@
 import datetime
 {%endif%}
 import locale
+import os
 import platform
 import sys
 {%if package_module == 'coalib' %}
@@ -76,16 +77,20 @@ class BuildDocsCommand(setuptools.command.build_py.build_py):
 {%block local_exec_block_2%}
 {%endblock%}
 
-with open('requirements.txt') as requirements:
+__dir__ = os.path.dirname(__file__)
+filename = os.path.join(__dir__, 'requirements.txt')
+with open(filename) as requirements:
     required = requirements.read().splitlines()
 {%if package_module == 'bears' %}
     required.remove('-r bear-requirements.txt')
 {%endif%}
 
-with open('test-requirements.txt') as requirements:
+filename = os.path.join(__dir__, 'test-requirements.txt')
+with open(filename) as requirements:
     test_required = requirements.read().splitlines()
 
-with open('README.rst') as readme:
+filename = os.path.join(__dir__, 'README.rst')
+with open(filename) as readme:
     long_description = readme.read()
 
 extras_require = None
