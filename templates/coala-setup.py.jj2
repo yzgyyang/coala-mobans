@@ -126,11 +126,11 @@ if __name__ == '__main__':
           classifiers=[
               'Development Status :: 4 - Beta',
 
-{%if package_module == 'coalib' %}
-              'Environment :: Console',
-{%elif package_module == 'bears' %}
+{% if package_module == 'bears' %}
               'Environment :: Plugins',
-{%endif%}
+{% else %}
+              'Environment :: Console',
+{% endif %}
               'Environment :: MacOS X',
               'Environment :: Win32 (MS Windows)',
               'Environment :: X11 Applications :: Gnome',
