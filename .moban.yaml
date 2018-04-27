@@ -1,0 +1,10 @@
+name: mobans
+contact: coala.analyzer@gmail.com
+description: Centralised repo for metadata, templates and assets
+
+configuration:
+  template_dir:
+    - ../pypi-mobans/
+  configuration: .moban.yaml
+copy:
+  - templates/requirements.txt.jj2: ../pypi-mobans/templates/requirements.txt.jj2
