@@ -7,6 +7,7 @@ moban:
     - git clone --depth 1 https://github.com/github/gitignore ../gitignore
     # See https://github.com/github/gitignore/pull/2728
     - sed -i 's/ *$//g' ../gitignore/Global/Eclipse.gitignore
+    - git clone https://github.com/coala/artwork ../artwork
   script:
     - moban
     - git diff --exit-code

@@ -1,0 +1,5 @@
+_build
+# all .rst files here are generated
+*.rst
+# …except for the index
+!index.rst

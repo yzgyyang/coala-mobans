@@ -7,6 +7,7 @@ configuration:
     - ../pypi-mobans/
     - ../python-appveyor-demo/
     - ../gitignore/
+    - ../artwork/
     - templates/
     - assets/
   configuration: .moban.yaml
@@ -41,3 +42,5 @@ copy:
   - assets/gitignore/Global/Eclipse.gitignore: Global/Eclipse.gitignore
   - assets/gitignore/Global/TortoiseGit.gitignore: Global/TortoiseGit.gitignore
   - assets/gitignore/Global/Tags.gitignore: Global/Tags.gitignore
+  - assets/docs/images/coala_logo.svg: artwork/logo/coala_color.svg
+  - assets/docs/images/coala-header.png: artwork/logo/coala-header.png
