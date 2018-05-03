@@ -37,7 +37,7 @@ class PyTestCommand(TestCommand):
     """
     From https://pytest.org/latest/goodpractices.html
     """
-    user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
+    user_options = [('pytest-args=', 'a', 'Arguments to pass to py.test')]
 
     def initialize_options(self):
         TestCommand.initialize_options(self)
