@@ -120,6 +120,8 @@ if __name__ == '__main__':
                         'bears.java': ['checkstyle.jar', 'google_checks.xml'],
                         'bears.scala': ['scalastyle.jar',
                                         'scalastyle_config.xml']},
+{% else %}
+          package_data={'{{ package_module }}': ['VERSION']},
 {%endif%}
           license='AGPL-3.0',
           data_files=data_files,
