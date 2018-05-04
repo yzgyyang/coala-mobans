@@ -123,7 +123,7 @@ if __name__ == '__main__':
 {% else %}
           package_data={'{{ package_module }}': ['VERSION']},
 {%endif%}
-          license='AGPL-3.0',
+          license='{{ license }}',
           data_files=data_files,
           long_description=long_description,
 {%if entry_points %}
@@ -153,8 +153,14 @@ if __name__ == '__main__':
               'Intended Audience :: Science/Research',
               'Intended Audience :: Developers',
 
+{% if license == 'AGPL-3.0' %}
               'License :: OSI Approved :: GNU Affero General Public License '
               'v3 or later (AGPLv3+)',
+{% elif license == 'GPL v3' %}
+              'License :: OSI Approved :: General Public License v3 (GPLv3)'
+{% elif license == 'MIT' %}
+              'License :: OSI Approved :: MIT License'
+{% endif %}
 
               'Operating System :: OS Independent',
 
