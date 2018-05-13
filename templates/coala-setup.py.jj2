@@ -94,6 +94,7 @@ data_files = None
 {%endblock%}
 
 if __name__ == '__main__':
+{% block setup_call %}
     setup(name='{{name}}',
           version=VERSION,
           description='{{description}}',
@@ -191,3 +192,4 @@ elif not maintainer_list %},{%endif%}
 {% block custom_setup_commands %}
 {% endblock %}
                     'test': PyTestCommand})
+{% endblock %}
