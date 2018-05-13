@@ -54,6 +54,7 @@ class PyTestCommand(TestCommand):
         errno = pytest.main(self.pytest_args)
         sys.exit(errno)
 
+{% if docs_output_dir %}
 
 class BuildDocsCommand(setuptools.command.build_py.build_py):
     apidoc_command = (
@@ -71,6 +72,7 @@ class BuildDocsCommand(setuptools.command.build_py.build_py):
             err_no = call(self.make_command)
         sys.exit(err_no)
 
+{% endif %}
 {%block local_exec_block_2%}
 {%endblock%}
 
@@ -171,7 +173,8 @@ if __name__ == '__main__':
               'Topic :: Scientific/Engineering :: Information Analysis',
               'Topic :: Software Development :: Quality Assurance',
               'Topic :: Text Processing :: Linguistic'],
-          cmdclass={'docs': BuildDocsCommand,
+          cmdclass={ {%- if docs_output_dir %}'docs': BuildDocsCommand,{% endif %}
+
 {% block custom_setup_commands %}
 {% endblock %}
                     'test': PyTestCommand})
