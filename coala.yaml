@@ -14,3 +14,4 @@ maintainer_emails:
   - lasse.schuirmann@gmail.com
   - fabian@neuschmidt.de
   - makman@alice.de
+ci_directory: .ci
