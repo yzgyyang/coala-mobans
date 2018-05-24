@@ -99,9 +99,22 @@ if __name__ == '__main__':
           description='{{description}}',
           author='{{author}}',
           author_email='{{contact}}',
-          maintainer='{{ maintainers |join(', ') }}'{% if rtd_maintainer %}
+          maintainer={% if not maintainers %}
+{% for maintainer in maintainer_list: %}
+{%- if not loop.first %}                     {%endif%}
+'{{- maintainer }}{% if not loop.last %}, {%endif%}'{%
+if (not rtd_maintainer) and loop.last %},{%endif%}
+{% if not loop.last %}
 
-                     if not on_rtd else '{{rtd_maintainer}}'{%endif%},
+{% endif %}
+{% endfor -%}
+{% else %}
+'{{ maintainers |join(', ') }}'{%endif%}
+{% if rtd_maintainer %}
+
+                     if not on_rtd else '{{rtd_maintainer}}',{%
+elif not maintainer_list %},{%endif%}
+
           maintainer_email=({% for email in maintainer_emails: %}
 {%- if not loop.first %}                            {%endif%}
 '{{- email }}{% if not loop.last %}, {%endif%}'{% if loop.last %}),{%endif%}
