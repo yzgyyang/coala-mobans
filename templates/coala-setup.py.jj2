@@ -105,10 +105,13 @@ with open(filename) as readme:
     long_description = readme.read()
 
 extras_require = None
+EXTRAS_REQUIRE = {}
 data_files = None
 {%block custom_requirements%}
 {%endblock%}
 
+if extras_require:
+    EXTRAS_REQUIRE = extras_require
 SETUP_COMMANDS.update({
 {% block custom_setup_commands %}
 {% endblock %}
@@ -146,7 +149,7 @@ elif not maintainer_list %},{%endif%}
           platforms='any',
           packages=find_packages(exclude=('build.*', 'tests', 'tests.*')),
           install_requires=required,
-          extras_require=extras_require,
+          extras_require=EXTRAS_REQUIRE,
           tests_require=test_required,
 {%if package_module == 'coalib' %}
           package_data={'coalib': ['system_coafile', 'VERSION',
