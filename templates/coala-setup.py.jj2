@@ -33,6 +33,10 @@ except (ValueError, UnicodeError):
 
 VERSION = '{{build_version}}'
 
+{% block additional_setup_commands %}
+SETUP_COMMANDS = {}
+{% endblock %}
+
 {%block local_exec_block_1%}
 {%endblock%}
 
@@ -57,6 +61,9 @@ class PyTestCommand(TestCommand):
         errno = pytest.main(self.pytest_args)
         sys.exit(errno)
 
+
+SETUP_COMMANDS['test'] = PyTestCommand
+
 {% if docs_output_dir %}
 
 class BuildDocsCommand(setuptools.command.build_py.build_py):
@@ -75,6 +82,8 @@ class BuildDocsCommand(setuptools.command.build_py.build_py):
             err_no = call(self.make_command)
         sys.exit(err_no)
 
+
+SETUP_COMMANDS['docs'] = BuildDocsCommand
 {% endif %}
 {%block local_exec_block_2%}
 {%endblock%}
@@ -99,6 +108,11 @@ extras_require = None
 data_files = None
 {%block custom_requirements%}
 {%endblock%}
+
+SETUP_COMMANDS.update({
+{% block custom_setup_commands %}
+{% endblock %}
+})
 
 if __name__ == '__main__':
 {% block setup_call %}
@@ -195,9 +209,6 @@ elif not maintainer_list %},{%endif%}
               'Topic :: Scientific/Engineering :: Information Analysis',
               'Topic :: Software Development :: Quality Assurance',
               'Topic :: Text Processing :: Linguistic'],
-          cmdclass={ {%- if docs_output_dir %}'docs': BuildDocsCommand,{% endif %}
-
-{% block custom_setup_commands %}
-{% endblock %}
-                    'test': PyTestCommand})
+          cmdclass=SETUP_COMMANDS,
+     )
 {% endblock %}
