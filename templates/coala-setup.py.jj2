@@ -10,7 +10,9 @@ import sys
 {%if package_module == 'coalib' %}
 from os import getenv
 {%endif%}
+{% if docs_output_dir %}
 from subprocess import call
+{% endif %}
 
 import setuptools.command.build_py
 from setuptools import find_packages, setup
