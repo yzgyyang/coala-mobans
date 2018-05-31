@@ -28,7 +28,7 @@ try:
     pf = platform.system()
     if pf != 'Windows' and lc == (None, None):
         locale.setlocale(locale.LC_ALL, 'C.UTF-8')
-except (ValueError, UnicodeError):
+except (ValueError, UnicodeError, locale.Error):
     locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 VERSION = '{{build_version}}'
