@@ -213,5 +213,5 @@ elif not maintainer_list %},{%endif%}
               'Topic :: Software Development :: Quality Assurance',
               'Topic :: Text Processing :: Linguistic'],
           cmdclass=SETUP_COMMANDS,
-     )
+          )
 {% endblock %}
