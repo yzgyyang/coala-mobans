@@ -5,6 +5,7 @@ author: The coala developers
 contact: coala-devel@googlegroups.com
 license: AGPL-3.0
 copyright_year: 2017
+language: python
 docs_output_dir: docs
 maintainers:
   - Lasse Schuirmann

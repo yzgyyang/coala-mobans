@@ -1,0 +1,42 @@
+{% if not gitignore_global_rulesets %}
+{% set gitignore_global_rulesets = [
+    'VirtualEnv',
+    'Linux', 'Windows', 'macOS',
+    'Emacs', 'Vim',
+    'JetBrains', 'SublimeText', 'KDevelop4', 'Kate',
+    'TextMate', 'VisualStudioCode', 'Xcode', 'Eclipse',
+    'TortoiseGit',
+    'Tags',
+    ] %}
+{% endif %}
+{% if not gitignore_language and gitignore_language != false %}
+{% if language %}
+{% set gitignore_language = language | title %}
+{% else %}
+{% set gitignore_language = 'Python' %}
+{% endif %}
+{% endif %}
+# moban hashes
+.moban.hashes
+
+# Extra rules from https://github.com/github/gitignore/
+{% if gitignore_language %}
+# {{ gitignore_language }} rules
+{% include 'gitignore/' + gitignore_language + '.gitignore' %}
+{% endif %}
+{% for ruleset in gitignore_extra_rulesets %}
+{% if ruleset is lower %}
+{% set ruleset = ruleset | title %}
+{% endif %}
+# {{ ruleset }} rules
+{% include 'gitignore/' + ruleset + '.gitignore' %}
+
+{% endfor %}
+{% for ruleset in gitignore_global_rulesets %}
+
+# {{ ruleset }} rules
+{% include 'gitignore/Global/' + ruleset + '.gitignore' %}
+{% endfor %}
+
+{%block extra%}
+{%endblock%}

@@ -1,0 +1,4 @@
+{% extends 'gitignore.jj2' %}
+{% block extra %}
+{% include 'gitignore/coala.gitignore' %}
+{% endblock %}

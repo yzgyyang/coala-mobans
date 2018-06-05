@@ -1,0 +1,4 @@
+# Patch & backup files
+*.patch
+*.orig
+*.diff
