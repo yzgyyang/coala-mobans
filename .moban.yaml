@@ -14,6 +14,7 @@ targets:
 copy:
   - templates/requirements.txt.jj2: ../pypi-mobans/templates/requirements.txt.jj2
   - templates/gitignore.jj2: ../pypi-mobans/templates/gitignore.jj2
+  - templates/setup.py.jj2: ../pypi-mobans/templates/setup.py.jj2
   - assets/gitignore/Elisp.gitignore: ../gitignore/Elisp.gitignore
   - assets/gitignore/GitBook.gitignore: ../gitignore/GitBook.gitignore
   - assets/gitignore/Jekyll.gitignore: ../gitignore/Jekyll.gitignore
