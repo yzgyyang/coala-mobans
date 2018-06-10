@@ -16,3 +16,4 @@ maintainer_emails:
   - fabian@neuschmidt.de
   - makman@alice.de
 ci_directory: .ci
+docs_toc: true

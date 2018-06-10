@@ -83,14 +83,25 @@ class BuildDocsCommand(setuptools.command.build_py.build_py):
         source_docs_dir = os.path.join(setup_dir, '{{docs_output_dir}}')
 
         set_python_path(setup_dir)
-
-        self.apidoc_command = (
-            'sphinx-apidoc', '-f', '-o', source_docs_dir,
         {%if package_module == 'coalib' %}
+        {% set docs_toc = false %}
+        {%endif %}
+
+        self.apidoc_commands = list()
+        {% if not packages %}
+        {% set packages = [package_module] %}
+        {% endif %}
+
+        {% for package in packages: %}
+        self.apidoc_commands.append((
+            'sphinx-apidoc', '-f', '-o', source_docs_dir,
+        {%if not docs_toc %}
             '--no-toc',
-        {%endif%}
-            os.path.join(setup_dir, '{{package_module}}'),
-        )
+        {% endif %}
+            os.path.join(setup_dir, '{{package}}')
+        ))
+
+        {% endfor %}
         self.make_command = (
             'make', '-C',
             docs_dir,
@@ -103,9 +114,11 @@ class BuildDocsCommand(setuptools.command.build_py.build_py):
         self.optimize = 2
 
     def run(self):
-        err_no = call(self.apidoc_command)
-        if not err_no:
-            err_no = call(self.make_command)
+        for command in self.apidoc_commands:
+            err_no = call(command)
+            if err_no:
+                sys.exit(err_no)
+        err_no = call(self.make_command)
         sys.exit(err_no)
 
 
