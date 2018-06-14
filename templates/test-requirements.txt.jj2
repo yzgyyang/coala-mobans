@@ -10,6 +10,10 @@ codecov~=2.0.5
 freezegun~=0.3.9
 {%endif%}
 moban~=0.0.9
+{% if package_module != 'coalib' %}
+{# https://gitlab.com/coala/mobans/issues/40 #}
+packaging~=16.8
+{% endif %}
 pytest~=3.1.1
 pytest-cov~=2.4
 pytest-env~=0.6.0
