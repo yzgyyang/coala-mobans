@@ -17,3 +17,4 @@ maintainer_emails:
   - makman@alice.de
 ci_directory: .ci
 docs_toc: true
+test_prevent_skips: true
