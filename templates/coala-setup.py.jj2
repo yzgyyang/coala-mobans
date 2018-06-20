@@ -80,8 +80,9 @@ class BuildDocsCommand(setuptools.command.build_py.build_py):
 
     def initialize_options(self):
         setup_dir = os.path.join(os.getcwd(), __dir__)
-        docs_dir = os.path.join(setup_dir, 'docs')
-        source_docs_dir = os.path.join(setup_dir, '{{docs_output_dir}}')
+        docs_dir = os.path.join(setup_dir, '{{docs_dir or "docs"}}')
+        source_docs_dir = os.path.join(docs_dir,
+                                       '{{docs_source_dir or "source/"}}')
 
         set_python_path(setup_dir)
         {%if package_module == 'coalib' %}
