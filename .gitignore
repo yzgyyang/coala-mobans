@@ -474,3 +474,6 @@ cscope.po.out
 *.patch
 *.orig
 *.diff
+
+# Pytest profile files
+prof/
