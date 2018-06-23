@@ -160,6 +160,8 @@ def read_requirements(filename):
 
             data.append(line)
 
+    return data
+
 
 required = read_requirements('requirements.txt')
 {%if package_module == 'bears' %}
