@@ -26,11 +26,9 @@ environment:
 {% endif %}
 cache:
   - "C:\\pip_cache"
-  {% if package_module == 'bears' %}
   - "node_modules"
   - "C:\\Users\\appveyor\\AppData\\Local\\coala-bears\\coala-bears"
   - "C:\\Users\\appveyor\\AppData\\Roaming\\nltk_data"
-  {% endif %}
 
 branches:
   except:
@@ -56,7 +54,9 @@ install:
   - "python --version"
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
   - "%CMD_IN_ENV% python -m pip install -r requirements.txt \
-    -r test-requirements.txt"
+    -r test-requirements.txt{%
+    if docs_dir and docs_output_dir != false %}
+ -r docs-requirements.txt{% endif %}"
   {% if package_module == 'bears' %}
   - ps: "Install-Product node ''"  # Use latest node v5.x.x
   - "npm config set loglevel warn"
@@ -83,6 +83,18 @@ test_script:
   - "%CMD_IN_ENV% py.test"
   {% endif %}
   - "%CMD_IN_ENV% python setup.py install"
+  {% if package_module != 'bears' %}
+  - "%CMD_IN_ENV% pip install coala-bears[alldeps] --pre -U"
+  {% endif %}
+  {% if docs_dir and package_module != 'bears' %}
+  - npm install csslint -g
+  {% if package_module == 'coalib' %}
+  # https://github.com/coala/coala/issues/5619
+  - rm docs/Developers/coala_settings.rst
+  {% endif %}
+  {% endif %}
+  - sed -i '/ShellCheckBear/d' .coafile
+  - "%CMD_IN_ENV% coala --ci"
 
 on_success:
   - codecov
