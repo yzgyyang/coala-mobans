@@ -14,6 +14,15 @@ environment:
       PYTHON_VERSION: "3.4.4"
       PYTHON_ARCH: "64"
 
+{% if test_py36 != false %}
+    - PYTHON: "C:\\Python36"
+      PYTHON_VERSION: "3.6"
+      PYTHON_ARCH: "32"
+
+    - PYTHON: "C:\\Python36-x64"
+      PYTHON_VERSION: "3.6"
+      PYTHON_ARCH: "64"
+{% endif %}
 cache:
   - "C:\\pip_cache"
   {% if package_module == 'bears' %}
