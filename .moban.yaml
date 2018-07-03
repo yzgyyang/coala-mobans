@@ -25,6 +25,8 @@ copy:
   - assets/gitignore/Maven.gitignore: Maven.gitignore
   - assets/gitignore/Node.gitignore: Node.gitignore
   - assets/gitignore/Python.gitignore: Python.gitignore
+  - assets/gitignore/R.gitignore: R.gitignore
+  - assets/gitignore/Ruby.gitignore: Ruby.gitignore
   - assets/gitignore/Sass.gitignore: Sass.gitignore
   - assets/gitignore/Global/VirtualEnv.gitignore: Global/VirtualEnv.gitignore
   - assets/gitignore/Global/Linux.gitignore: Global/Linux.gitignore
