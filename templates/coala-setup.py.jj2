@@ -211,9 +211,11 @@ if (not rtd_maintainer) and loop.last %},{%endif%}
                      if not on_rtd else '{{rtd_maintainer}}',{%
 elif not maintainer_list %},{%endif%}
 
-          maintainer_email=({% for email in maintainer_emails: %}
+          maintainer_email={% if maintainer_emails|length > 1 %}({%endif%}
+{% for email in maintainer_emails: %}
 {%- if not loop.first %}                            {%endif%}
-'{{- email }}{% if not loop.last %}, {%endif%}'{% if loop.last %}),{%endif%}
+'{{- email }}{% if not loop.last %}, {%endif%}'{%
+if loop.last %}{% if maintainer_emails|length > 1 %}){%endif%},{%endif%}
 
 {%endfor%}
           url='{{url}}',
