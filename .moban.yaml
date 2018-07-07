@@ -13,6 +13,7 @@ configuration:
   configuration: .moban.yaml
 targets:
   - .gitignore: coala-gitignore.jj2
+  - .gitlab-ci.yml: ci/gitlab-ci.yml.jj2
 copy:
   - templates/requirements.txt.jj2: templates/requirements.txt.jj2
   - templates/gitignore.jj2: templates/gitignore.jj2

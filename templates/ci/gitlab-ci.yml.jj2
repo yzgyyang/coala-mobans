@@ -1,0 +1,81 @@
+{% macro common_python_script() %}
+.common_script: &common_script
+  - $PYTHON -m pytest --cov-fail-under=100
+  - $PYTHON -m codecov
+{% endmacro %}
+variables:
+  PYTHON: python3
+  DEBIAN_FRONTEND: noninteractive
+  XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
+{% block global_variables %}
+{% endblock %}
+
+cache:
+  paths:
+    - $CI_PROJECT_PATH/.cache/pip
+
+{% block test_jobs %}
+{% if language == 'python' %}
+
+.common_deps_script: &common_deps_script |
+{% if package_module == 'pyprint' %}
+  apk add --no-cache espeak
+{% endif %}
+{% if language == 'python' %}
+{% if test_with_alpine %}
+  apk add --no-cache git  # for git+ requirements
+{% endif %}
+  $PYTHON -m pip install setuptools==21 pip==9
+  pip install -r test-requirements.txt -r requirements.txt
+{% endif %}
+
+{{ common_python_script() }}
+
+{%- for python_version in python_versions %}
+{# Convert floats to string #}
+{% set python_version = python_version.__str__() %}
+{# Trim 3.4.4 to 3.4 #}
+{% set python_version = '.'.join(python_version.split('.')[:2]) %}
+{% set python_image = python_version %}
+{% if test_with_alpine %}
+{% set python_image = python_image + '-alpine' %}
+{% endif %}
+
+tests:{{ python_version }}:
+  image: python:{{ python_image }}
+  before_script:
+    - *common_deps_script
+  script: *common_script
+  coverage: '/Total coverage: \d+\.\d+%/'
+{% endfor %}
+{% endif %}
+{% endblock %}
+{% block extra_test_jobs %}
+{% endblock %}
+
+lint:
+  image: python:3.5
+  before_script:
+    - $PYTHON -m pip install setuptools==21 pip==9
+    - pip install 'git+https://github.com/coala/coala#egg=coala'
+    - pip install 'git+https://github.com/coala/coala-bears#egg=coala-bears'
+  script:
+    - coala --ci
+
+moban:
+  image: python:3.5
+  before_script:
+    - pip install moban
+{% if name == 'mobans' %}
+    - git clone https://github.com/moremoban/pypi-mobans ../pypi-mobans
+    - git clone https://github.com/ogrisel/python-appveyor-demo
+        ../python-appveyor-demo
+    - git clone --depth 1 https://github.com/github/gitignore ../gitignore
+    - git clone https://github.com/coala/artwork ../artwork
+  script:
+    - moban
+    - git diff --exit-code
+{% else %}
+  script:
+    - {{ci_directory}}/check_moban.sh
+{% endif %}

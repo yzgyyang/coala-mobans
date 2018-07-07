@@ -1,6 +1,7 @@
 [all]
 max_line_length = 80
 use_spaces = True
+ignore = .local/**
 
 [all.python]
 # Patches may conflict with autopep8 so putting them in own section so they

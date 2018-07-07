@@ -1,3 +1,22 @@
+variables:
+  PYTHON: python3
+  DEBIAN_FRONTEND: noninteractive
+  XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
+
+cache:
+  paths:
+    - $CI_PROJECT_PATH/.cache/pip
+
+
+lint:
+  image: python:3.5
+  before_script:
+    - $PYTHON -m pip install setuptools==21 pip==9
+    - pip install 'git+https://github.com/coala/coala#egg=coala'
+    - pip install 'git+https://github.com/coala/coala-bears#egg=coala-bears'
+  script:
+    - coala --ci
+
 moban:
   image: python:3.5
   before_script:

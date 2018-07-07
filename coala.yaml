@@ -18,3 +18,9 @@ ci_directory: .ci
 docs_dir: docs
 docs_toc: true
 test_prevent_skips: true
+python_versions:
+  - 3.4.4
+  - 3.5
+  - 3.6
+  - 3.7
+test_with_alpine: true
