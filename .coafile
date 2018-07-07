@@ -1,0 +1,32 @@
+[all]
+max_line_length = 80
+use_spaces = True
+
+[all.python]
+# Patches may conflict with autopep8 so putting them in own section so they
+# will be executed sequentially; also we need the LineLengthBear to double
+# check the line length because PEP8Bear sometimes isn't able to correct the
+# linelength.
+files = **.py
+bears = SpaceConsistencyBear, QuotesBear, PyUnusedCodeBear
+language = Python
+preferred_quotation = '
+remove_all_unused_imports = true
+language = Python
+
+[all.python.autopep8]
+bears = PEP8Bear, PycodestyleBear
+ignore += assets/ci/check_setuptools.py
+
+[all.linelength]  # Sometimes autopep8 makes too long lines, need to check after!
+bears = LineLengthBear
+ignore_length_regex = ^.*https?://
+
+[commit]
+bears = GitCommitBear
+shortlog_trailing_period = False
+shortlog_regex = ([^:]*|[^:]+[^ ]: [A-Z0-9*].*)
+
+[all.yml]
+bears = YAMLLintBear
+files = **.yml, **.yaml

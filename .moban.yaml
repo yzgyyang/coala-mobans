@@ -39,7 +39,8 @@ copy:
   - assets/gitignore/Global/KDevelop4.gitignore: Global/KDevelop4.gitignore
   - assets/gitignore/Global/Kate.gitignore: Global/Kate.gitignore
   - assets/gitignore/Global/TextMate.gitignore: Global/TextMate.gitignore
-  - assets/gitignore/Global/VisualStudioCode.gitignore: Global/VisualStudioCode.gitignore
+  - assets/gitignore/Global/VisualStudioCode.gitignore:
+      Global/VisualStudioCode.gitignore
   - assets/gitignore/Global/Xcode.gitignore: Global/Xcode.gitignore
   - assets/gitignore/Global/Eclipse.gitignore: Global/Eclipse.gitignore
   - assets/gitignore/Global/TortoiseGit.gitignore: Global/TortoiseGit.gitignore

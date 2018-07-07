@@ -3,7 +3,8 @@ moban:
   before_script:
     - pip install moban
     - git clone https://github.com/moremoban/pypi-mobans ../pypi-mobans
-    - git clone https://github.com/ogrisel/python-appveyor-demo ../python-appveyor-demo
+    - git clone https://github.com/ogrisel/python-appveyor-demo
+        ../python-appveyor-demo
     - git clone --depth 1 https://github.com/github/gitignore ../gitignore
     - git clone https://github.com/coala/artwork ../artwork
   script:
