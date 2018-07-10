@@ -17,7 +17,9 @@ from os import getenv
 from subprocess import call
 {% endif %}
 
+{% if docs_dir %}
 import setuptools.command.build_py
+{% endif %}
 from setuptools import find_packages, setup
 from setuptools.command.test import test as TestCommand
 
