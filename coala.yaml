@@ -6,7 +6,6 @@ contact: coala-devel@googlegroups.com
 license: AGPL-3.0
 copyright_year: 2017
 language: python
-docs_output_dir: docs
 maintainers:
   - Lasse Schuirmann
   - Fabian Neuschmidt
@@ -16,5 +15,6 @@ maintainer_emails:
   - fabian@neuschmidt.de
   - makman@alice.de
 ci_directory: .ci
+docs_dir: docs
 docs_toc: true
 test_prevent_skips: true
