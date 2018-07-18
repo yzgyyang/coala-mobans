@@ -84,8 +84,13 @@ test_script:
   - "%CMD_IN_ENV% py.test"
   {% endif %}
   - "%CMD_IN_ENV% python setup.py install"
+  {% if package_module != 'coalib' %}
+  - "%CMD_IN_ENV% python -m pip install \
+    git+https://github.com/coala/coala"
+  {% endif %}
   {% if package_module != 'bears' %}
-  - "%CMD_IN_ENV% pip install coala-bears[alldeps] --pre -U"
+  - "%CMD_IN_ENV% python -m pip install \
+    git+https://github.com/coala/coala-bears"
   {% endif %}
   {% if docs_dir and package_module != 'bears' %}
   - npm install csslint -g
