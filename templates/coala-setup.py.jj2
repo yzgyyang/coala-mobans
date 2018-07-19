@@ -197,7 +197,7 @@ if __name__ == '__main__':
 {% block setup_call %}
     setup(name='{{name}}',
           version=VERSION,
-          {% if zip_safe is not none %}
+          {% if zip_safe is defined %}
           zip_safe={{zip_safe}},
           {% endif %}
           description='{{description}}',
