@@ -137,6 +137,12 @@ SETUP_COMMANDS['docs'] = BuildDocsCommand
 __dir__ = os.path.dirname(__file__)
 
 
+{% include 'python/PEP440Version.py' %}
+
+
+{% include 'python/egg_name_to_requirement.py' %}
+
+
 def read_requirements(filename):
     """
     Parse a requirements file.
@@ -162,7 +168,7 @@ def read_requirements(filename):
 
                 DEPENDENCY_LINKS.append(line)
 
-                line = egg_name.replace('-', '==')
+                line = egg_name_to_requirement(egg_name)
 
             data.append(line)
 
