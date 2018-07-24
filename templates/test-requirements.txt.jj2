@@ -38,5 +38,8 @@ requests-mock~=1.2
 {% endif %}
 pip!=9.0.2, !=10.0.*, !=18.0
 {% if language == 'python' %}
+{% if 2.7 in python_versions %}
+unittest2
+{% endif %}
 wheel~=0.29
 {% endif %}

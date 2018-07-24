@@ -36,6 +36,7 @@ cache:
 {% set python_version = python_version.__str__() %}
 {# Trim 3.4.4 to 3.4 #}
 {% set python_version = '.'.join(python_version.split('.')[:2]) %}
+{% set python_major = python_version[0] %}
 {% set python_image = python_version %}
 {% if test_with_alpine %}
 {% set python_image = python_image + '-alpine' %}
@@ -43,6 +44,10 @@ cache:
 
 tests:{{ python_version }}:
   image: python:{{ python_image }}
+{% if python_major != '3' %}
+  variables:
+    PYTHON: python2
+{% endif %}
   before_script:
     - *common_deps_script
   script: *common_script
