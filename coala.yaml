@@ -24,3 +24,5 @@ python_versions:
   - 3.6
   - 3.7
 test_with_alpine: true
+pytest_version: 3.6.1
+test_timeout: 35

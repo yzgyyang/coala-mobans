@@ -20,7 +20,7 @@ moban~=0.0.9
 packaging~=16.8
 {% endif %}
 {% if language == 'python' %}
-pytest~=3.6.1
+pytest~={{ pytest_version }}
 pytest-cov~=2.4
 pytest-env~=0.6.0
 {% if test_prevent_skips %}

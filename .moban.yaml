@@ -1,6 +1,9 @@
+overrides: coala.yaml
+
 name: mobans
 contact: coala.analyzer@gmail.com
 description: Centralised repo for metadata, templates and assets
+language: false
 
 configuration:
   template_dir:
@@ -14,6 +17,7 @@ configuration:
 targets:
   - .gitignore: coala-gitignore.jj2
   - .gitlab-ci.yml: ci/gitlab-ci.yml.jj2
+  - setup.cfg: setup.cfg.jj2
 copy:
   - templates/requirements.txt.jj2: templates/requirements.txt.jj2
   - templates/gitignore.jj2: templates/gitignore.jj2
