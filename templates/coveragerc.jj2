@@ -1,0 +1,43 @@
+{% if not packages and package_module %}
+{% set packages = [package_module] %}
+{% endif %}
+{% if generating_setup_cfg %}
+{% set section_prefix = 'coverage:' %}
+{% endif %}
+[{{section_prefix}}coverage_env_plugin]
+markers = True
+
+[{{section_prefix}}run]
+branch = True
+cover_pylib = False
+
+plugins =
+  coverage_env_plugin
+  coverage_config_reload_plugin
+
+{% if name == 'mobans' %}
+source =
+  assets/python
+{% elif package_module %}
+source =
+{% for package in packages %}
+  {{ package }}
+{% endfor %}
+{% endif %}
+
+omit = tests/*
+
+[{{section_prefix}}report]
+fail_under = 100
+show_missing = True
+skip_covered = False
+sort = Miss
+exclude_lines =
+{% if allow_generic_no_cover %}
+  pragma: no ?cover
+{% endif %}
+  pragma ${PLATFORM_SYSTEM}: no cover
+  pragma ${OS_NAME}: no cover
+  pragma Python [0-9.,]*${PYTHON_VERSION}[0-9.,]*: no cover
+{% block coverage_pragma %}
+{% endblock %}
