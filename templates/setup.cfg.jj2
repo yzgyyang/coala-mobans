@@ -10,11 +10,17 @@ python-tag = py34.py35.py36
 [tool:pytest]
 minversion = {{ pytest_version }}
 
+{% if 'manage.py' is exists %}
+DJANGO_SETTINGS_MODULE = {{ packages[0] }}.settings
+
+{% endif %}
 testpaths =
 {% for package in packages %}
   {{ package }}
 {% endfor %}
+{% if 'tests' is exists %}
   tests
+{% endif %}
 
 python_files = *Test.py
 python_classes = *Test
