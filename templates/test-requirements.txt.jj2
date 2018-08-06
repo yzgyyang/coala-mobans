@@ -22,6 +22,9 @@ packaging~=16.8
 {% if language == 'python' %}
 pytest~={{ pytest_version }}
 pytest-cov~=2.4
+{% if 'manage.py' is exists %}
+pytest-django~=3.3.3
+{% endif %}
 pytest-env~=0.6.0
 {% if test_prevent_skips %}
 pytest-error-for-skips~=1.0
