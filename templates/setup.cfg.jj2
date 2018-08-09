@@ -2,6 +2,9 @@
 {% if not packages and package_module %}
 {% set packages = [package_module] %}
 {% endif %}
+{% if 'manage.py' is exists %}
+{% set django = true %}
+{% endif %}
 [bdist_wheel]
 python-tag = py34.py35.py36
 {% block extras %}
@@ -10,7 +13,7 @@ python-tag = py34.py35.py36
 [tool:pytest]
 minversion = {{ pytest_version }}
 
-{% if 'manage.py' is exists %}
+{% if django %}
 DJANGO_SETTINGS_MODULE = {{ packages[0] }}.settings
 
 {% endif %}
@@ -22,7 +25,11 @@ testpaths =
   tests
 {% endif %}
 
-python_files = *Test.py
+{% if django %}
+python_files = test_*.py
+{% else %}
+python_files = {{ test_file_glob | default('*Test.py') }}
+{% endif %}
 python_classes = *Test
 
 addopts =
