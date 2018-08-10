@@ -29,7 +29,8 @@ copy:
   - templates/requirements.txt.jj2: templates/requirements.txt.jj2
   - templates/gitignore.jj2: templates/gitignore.jj2
   - templates/setup.py.jj2: templates/setup.py.jj2
-  - assets/install.ps1: ../python-appveyor-demo/appveyor/install.ps1
+  - assets/run_with_env.cmd: appveyor/run_with_env.cmd
+  - assets/install.ps1: appveyor/install.ps1
   - assets/gitignore/Elisp.gitignore: Elisp.gitignore
   - assets/gitignore/GitBook.gitignore: GitBook.gitignore
   - assets/gitignore/Jekyll.gitignore: Jekyll.gitignore
