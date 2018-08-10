@@ -1,3 +1,6 @@
+{% if package_module == 'bears' %}
+{% set dependencies = true %}
+{% endif %}
 environment:
   global:
     # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
@@ -54,8 +57,8 @@ install:
   - "python --version"
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
   - "%CMD_IN_ENV% python -m pip install --upgrade setuptools==21 pip==9"
-  - "%CMD_IN_ENV% python -m pip install -r requirements.txt \
-    -r test-requirements.txt{%
+  - "%CMD_IN_ENV% python -m pip install -r test-requirements.txt \
+    {% if dependencies %}{{ '    ' }}-r requirements.txt{% endif %}{%
     if docs_dir and docs_output_dir != false %}
  -r docs-requirements.txt{% endif %}"
   {% if package_module == 'bears' %}

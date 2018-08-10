@@ -2,6 +2,9 @@
 {% if not docs_output_dir and not docs_dir %}
 {% set docs_dir = false %}
 {% endif %}
+{% if package_module == 'bears' %}
+{% set dependencies = true %}
+{% endif %}
 
 {%if package_module == 'coalib' %}
 import datetime
@@ -174,11 +177,13 @@ def read_requirements(filename):
 
     return data
 
+{% if dependencies %}
 
 required = read_requirements('requirements.txt')
 {%if package_module == 'bears' %}
 required.remove('-r bear-requirements.txt')
 {%endif%}
+{% endif %}
 
 test_required = read_requirements('test-requirements.txt')
 
@@ -235,7 +240,9 @@ if loop.last %}{% if maintainer_emails|length > 1 %}){%endif%},{%endif%}
           url='{{url}}',
           platforms='any',
           packages=find_packages(exclude=('build.*', 'tests', 'tests.*')),
+{% if dependencies %}
           install_requires=required,
+{% endif %}
           extras_require=EXTRAS_REQUIRE,
           tests_require=test_required,
           dependency_links=DEPENDENCY_LINKS,
