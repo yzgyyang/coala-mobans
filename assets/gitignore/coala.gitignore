@@ -1,7 +1,2 @@
-# Patch & backup files
-*.patch
-*.orig
-*.diff
-
 # Pytest profile files
 prof/

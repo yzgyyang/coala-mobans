@@ -1,4 +1,8 @@
 {% extends 'gitignore.jj2' %}
 {% block extra %}
+{% include 'gitignore/Global/Backup.gitignore' %}
+{% include 'gitignore/Global/Patch.gitignore' %}
+{% include 'gitignore/Global/Diff.gitignore' %}
+
 {% include 'gitignore/coala.gitignore' %}
 {% endblock %}
