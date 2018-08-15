@@ -40,6 +40,11 @@ except (ValueError, UnicodeError, locale.Error):
     locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 VERSION = '{{build_version}}'
+DESCRIPTION = (
+{% for line in description | split_length(70) %}
+    '{{line}}'{{' +' if not loop.last}}
+{% endfor %}
+)
 DEPENDENCY_LINKS = []
 
 {% block additional_setup_commands %}
@@ -211,7 +216,7 @@ if __name__ == '__main__':
           {% if zip_safe is defined %}
           zip_safe={{zip_safe}},
           {% endif %}
-          description='{{description}}',
+          description=DESCRIPTION,
           author='{{author}}',
           author_email='{{contact}}',
           maintainer={% if not maintainers %}
