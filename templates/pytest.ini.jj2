@@ -43,9 +43,8 @@ addopts =
   --instafail
   --profile
   --reorder 'requirements.txt' 'test-requirements.txt' '*'
+{{ pytest_extra_addopts -}}
 {# plugin reqs is enabled in conftest.py #}
-{% block extra_pytest_addopts %}
-{% endblock %}
 
 doctest_optionflags =
   ELLIPSIS

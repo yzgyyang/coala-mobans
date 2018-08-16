@@ -3,6 +3,9 @@
 python-tag = py34.py35.py36
 {% block extras %}
 {% endblock %}
+{% if self.extra_pytest_addopts %}
+{% set pytest_extra_addopts = self.extra_pytest_addopts() %}
+{% endif %}
 
 {% include 'pytest.ini.jj2' %}
 
